@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load akuntansi_filters %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="fw-bold mb-0">Penyesuaian Persediaan</h4>
+  <a class="btn btn-success" href="{% url 'persediaan:tambah_penyesuaian' %}">Tambah Penyesuaian</a>
+</div>
+<div class="card kartu p-3">
+  <table class="table"><thead><tr><th>No. Dokumen</th><th>Tanggal</th><th>Barang</th><th>Tipe</th><th>Kuantitas</th><th>Harga/Unit</th><th>Akun</th><th>Saldo</th><th>Keterangan</th><th>Aksi</th></tr></thead><tbody>{% for item in riwayat_mutasi %}<tr><td>{{ item.nomor_dokumen|default:"-" }}</td><td>{{ item.tanggal }}</td><td>{{ item.barang.nama_barang }}</td><td>{{ item.tipe_mutasi }}</td><td>{{ item.jumlah }}</td><td class="text-end">{{ item.harga_per_unit|format_rp }}</td><td>{{ item.akun|default:"-" }}</td><td>{{ item.saldo_setelah }}</td><td>{{ item.keterangan|default:"-" }}</td><td><a class="btn btn-sm btn-outline-primary" href="{% url 'persediaan:edit_penyesuaian' item.pk %}">Edit</a> <form method="post" action="{% url 'persediaan:hapus_penyesuaian' item.pk %}" class="d-inline">{% csrf_token %}<button class="btn btn-sm btn-outline-danger" onclick="return confirm('Hapus penyesuaian?')">Hapus</button></form></td></tr>{% empty %}<tr><td colspan="10">Belum ada data.</td></tr>{% endfor %}</tbody></table>
+</div>
+{% endblock %}

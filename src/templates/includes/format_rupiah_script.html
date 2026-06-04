@@ -1,0 +1,8 @@
+<script>
+  window.formatRupiah = function (nilai) {
+    const rounded = Math.round(Number(nilai) || 0);
+    const sign = rounded < 0 ? "-" : "";
+    const teks = Math.abs(rounded).toLocaleString("id-ID", { maximumFractionDigits: 0 });
+    return `${sign}Rp. ${teks}`;
+  };
+</script>

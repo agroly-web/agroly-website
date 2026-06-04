@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "includes/faktur_styles.html" %}
+<style>
+  .faktur-utang-pemasok .form-control,
+  .faktur-utang-pemasok .form-select {
+    border: 1px solid #c5ced8;
+    background: #fff;
+  }
+  .faktur-keterangan-band {
+    border-bottom: 1px solid #b8c4d4;
+    min-height: auto;
+  }
+  .faktur-keterangan-band .faktur-ship {
+    border-right: none;
+    background: #fafbfd;
+  }
+  .faktur-keterangan-band .faktur-ship-box {
+    min-height: 4.5rem;
+  }
+  .kartu .faktur-wrap input,
+  .kartu .faktur-wrap select,
+  .kartu .faktur-wrap textarea {
+    font-size: .88rem;
+    padding: .3rem .45rem;
+    border-radius: 2px;
+  }
+  .kartu .faktur-ship-box textarea {
+    width: 100%;
+    min-height: 4.5rem;
+    border: none;
+    background: transparent;
+    resize: vertical;
+  }
+  .kartu .faktur-doc-row input,
+  .kartu .faktur-doc-row select {
+    width: 100%;
+  }
+</style>
+
+<h4 class="fw-bold mb-3">{% if object %}Edit{% else %}Tambah{% endif %} Pembayaran Utang</h4>
+<div class="card kartu p-3 border-0 shadow-none bg-transparent">
+  <form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="faktur-wrap mb-3">
+      <div class="faktur-top">
+        <div class="row g-2 align-items-end">
+          <div class="col-md-6">
+            <label class="faktur-field-label" for="id_akun_kas_bayar">Membayar dari akun</label>
+            {{ form.akun_kas_bayar }}
+          </div>
+        </div>
+      </div>
+
+      <div class="faktur-mid row g-0">
+        <div class="col-md-6 faktur-ship faktur-utang-pemasok">
+          <label class="faktur-field-label" for="id_supplier">Pemasok</label>
+          <input type="text" id="cariPemasok" class="form-control form-control-sm mb-1" placeholder="Ketik untuk mencari pemasok…" autocomplete="off">
+          {{ form.supplier }}
+        </div>
+        <div class="col-md-6 faktur-doc">
+          <div class="faktur-doc-row">
+            <label class="faktur-doc-label" for="id_no_cek">No. Cek:</label>
+            {{ form.no_cek }}
+          </div>
+          <div class="faktur-doc-row">
+            <label class="faktur-doc-label" for="id_tanggal">Tanggal:</label>
+            {{ form.tanggal }}
+          </div>
+          <div class="faktur-doc-row">
+            <label class="faktur-doc-label" for="id_jumlah_bayar">Jumlah:</label>
+            {{ form.jumlah_bayar }}
+          </div>
+        </div>
+      </div>
+
+      <div class="faktur-mid faktur-keterangan-band row g-0">
+        <div class="col-12 faktur-ship">
+          <label class="faktur-field-label" for="id_keterangan">Keterangan</label>
+          <div class="faktur-ship-box">{{ form.keterangan }}</div>
+        </div>
+      </div>
+
+      <div class="faktur-mid row g-0">
+        <div class="col-md-6 faktur-ship">
+          <div class="faktur-doc-row">
+            <label class="faktur-doc-label" for="id_nomor_bukti">No. Bukti</label>
+            {{ form.nomor_bukti }}
+          </div>
+        </div>
+        <div class="col-md-6 faktur-doc">
+          <div class="faktur-doc-row">
+            <label class="faktur-doc-label" for="id_diskon">Diskon</label>
+            {{ form.diskon }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-success">Simpan</button>
+    <a class="btn btn-outline-secondary" href="{% url 'pembelian:pembayaran_utang' %}">Batal</a>
+  </form>
+</div>
+<script>
+  (function () {
+    const cari = document.getElementById("cariPemasok");
+    const select = document.getElementById("id_supplier");
+    if (!cari || !select) return;
+
+    const simpan = Array.from(select.options).map((o) => ({
+      value: o.value,
+      text: o.text,
+    }));
+
+    cari.addEventListener("input", () => {
+      const q = cari.value.toLowerCase();
+      const current = select.value;
+      select.innerHTML = "";
+      simpan.forEach((item) => {
+        if (!item.value || item.text.toLowerCase().includes(q)) {
+          const opt = document.createElement("option");
+          opt.value = item.value;
+          opt.textContent = item.text;
+          select.appendChild(opt);
+        }
+      });
+      if ([...select.options].some((o) => o.value === current)) {
+        select.value = current;
+      }
+    });
+  })();
+</script>
+{% endblock %}

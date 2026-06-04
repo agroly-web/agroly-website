@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load akuntansi_filters %}
+{% block content %}
+{% include "includes/laporan_finansial_styles.html" %}
+<h4 class="fw-bold mb-3">Arus Kas</h4>
+
+<div class="fin-outer">
+  <div class="fin-paper">
+    <header class="fin-header text-center">
+      <h2 class="fin-title mb-1">{{ arus_kas_detail.judul }}</h2>
+      <p class="fin-periode mb-0">{{ arus_kas_detail.periode }}</p>
+    </header>
+    {% include "includes/laporan_arus_kas_table.html" %}
+  </div>
+</div>
+{% endblock %}

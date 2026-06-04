@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load akuntansi_filters %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="fw-bold mb-0">Daftar Barang</h4>
+  <a class="btn btn-success" href="{% url 'persediaan:tambah_barang' %}">Tambah Barang</a>
+</div>
+<div class="card kartu p-3">
+  <table class="table"><thead><tr><th>Kode</th><th>Nama</th><th>Stok</th><th>Harga Beli</th><th>Harga Jual</th><th>Satuan</th><th>Aksi</th></tr></thead><tbody>{% for item in daftar_barang %}<tr><td>{{ item.kode_barang }}</td><td>{{ item.nama_barang }}</td><td>{{ item.stok }}</td><td class="text-end">{{ item.harga_beli|format_rp }}</td><td class="text-end">{{ item.harga_jual|format_rp }}</td><td>{{ item.satuan }}</td><td><a class="btn btn-sm btn-outline-primary" href="{% url 'persediaan:edit_barang' item.pk %}">Edit</a> <form method="post" action="{% url 'persediaan:hapus_barang' item.pk %}" class="d-inline">{% csrf_token %}<button class="btn btn-sm btn-outline-danger" onclick="return confirm('Hapus barang?')">Hapus</button></form></td></tr>{% empty %}<tr><td colspan="7">Belum ada data.</td></tr>{% endfor %}</tbody></table>
+</div>
+{% endblock %}

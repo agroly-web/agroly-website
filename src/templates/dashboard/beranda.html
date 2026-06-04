@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load akuntansi_filters %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="fw-bold">Dashboard</h4>
+</div>
+<div class="row g-3">
+  <div class="col-md-3"><div class="card kartu p-3"><div>Total Produksi</div><h3>{{ total_produksi }}</h3></div></div>
+  <div class="col-md-3"><div class="card kartu p-3"><div>Total Pendapatan</div><h3>{{ total_pendapatan|format_rp }}</h3></div></div>
+  <div class="col-md-3"><div class="card kartu p-3"><div>Total Pengeluaran</div><h3>{{ total_pengeluaran|format_rp }}</h3></div></div>
+  <div class="col-md-3"><div class="card kartu p-3"><div>Laba Bersih</div><h3>{{ laba_bersih|format_rp }}</h3></div></div>
+</div>
+<div class="card kartu p-3 mt-4">
+  <canvas id="grafikKeuangan"></canvas>
+</div>
+<script>
+new Chart(document.getElementById('grafikKeuangan'), {
+  type: 'bar',
+  data: {
+    labels: ['Pendapatan', 'Pengeluaran', 'Laba Bersih'],
+    datasets: [{ data: [{{ total_pendapatan|default:0 }}, {{ total_pengeluaran|default:0 }}, {{ laba_bersih|default:0 }}] }]
+  }
+});
+</script>
+{% endblock %}

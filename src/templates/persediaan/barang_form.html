@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="fw-bold mb-3">Form Barang Persediaan</h4>
+<div class="card kartu p-3">
+  <form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="row g-3 mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Kode Barang</label>
+        {{ form.kode_barang }}
+      </div>
+      <div class="col-md-8">
+        <label class="form-label">Nama Barang</label>
+        {{ form.nama_barang }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Stok Tersedia</label>
+        {{ form.stok }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Satuan</label>
+        {{ form.satuan }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Harga Beli</label>
+        {{ form.harga_beli }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Harga Jual</label>
+        {{ form.harga_jual }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Status Aktif</label>
+        {{ form.aktif }}
+      </div>
+    </div>
+    <button class="btn btn-success">Simpan</button>
+    <a class="btn btn-outline-secondary" href="{% url 'persediaan:barang' %}">Batal</a>
+  </form>
+</div>
+{% endblock %}

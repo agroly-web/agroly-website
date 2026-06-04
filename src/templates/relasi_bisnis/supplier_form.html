@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="fw-bold mb-3">{% if object %}Edit{% else %}Tambah{% endif %} Supplier</h4>
+<div class="card kartu p-3">
+  <form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="row g-3 mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Numbering</label>
+        {{ form.numbering }}
+        <div class="form-text">Otomatis: S-01, S-02, …</div>
+      </div>
+      <div class="col-md-8">
+        <label class="form-label">Nama</label>
+        {{ form.nama }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Telepon</label>
+        {{ form.telepon }}
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Saldo Saat Ini</label>
+        {{ form.saldo_saat_ini }}
+      </div>
+      <div class="col-md-9">
+        <label class="form-label">Alamat</label>
+        {{ form.alamat }}
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">Status Aktif</label>
+        <div class="form-check mt-2">{{ form.aktif }}</div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-success">Simpan</button>
+    <a class="btn btn-outline-secondary" href="{% url 'relasi_bisnis:supplier' %}">Batal</a>
+  </form>
+</div>
+{% endblock %}
