@@ -1,0 +1,113 @@
+<style>
+  .faktur-wrap {
+    border: 1px solid #b8c4d4;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    font-size: .9rem;
+  }
+  .faktur-top {
+    background: linear-gradient(180deg, #eef2f7 0%, #e4eaf2 100%);
+    border-bottom: 1px solid #b8c4d4;
+    padding: .65rem .85rem;
+  }
+  .faktur-top .faktur-field-label {
+    display: block;
+    font-weight: 600;
+    font-size: .78rem;
+    color: #2c3e50;
+    margin-bottom: .2rem;
+  }
+  .faktur-mid {
+    border-bottom: 1px solid #b8c4d4;
+    min-height: 7rem;
+  }
+  .faktur-ship {
+    border-right: 1px solid #b8c4d4;
+    padding: .55rem .75rem;
+    background: #fafbfd;
+  }
+  .faktur-ship-box {
+    min-height: 5.5rem;
+    padding: .45rem .55rem;
+    background: #fff;
+    border: 1px solid #c5ced8;
+    border-radius: 2px;
+    color: #344054;
+    white-space: pre-wrap;
+    font-size: .85rem;
+  }
+  .faktur-doc {
+    padding: .55rem .75rem;
+    background: #fff;
+  }
+  .faktur-doc-row {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: .45rem;
+  }
+  .faktur-doc-row:last-child {
+    margin-bottom: 0;
+  }
+  .faktur-doc-label {
+    font-weight: 600;
+    color: #2c3e50;
+    text-align: right;
+    font-size: .82rem;
+  }
+  .faktur-grid {
+    width: 100%;
+    margin: 0;
+    border-collapse: collapse;
+  }
+  .faktur-grid thead th {
+    background: #1e4a7a;
+    color: #fff;
+    font-weight: 600;
+    font-size: .8rem;
+    padding: .45rem .4rem;
+    border: 1px solid #163a60;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .faktur-grid tbody td {
+    border: 1px solid #c5ced8;
+    padding: .35rem .45rem;
+    vertical-align: middle;
+    background: #fff;
+  }
+  .faktur-grid tbody tr:nth-child(even) td {
+    background: #f7f9fc;
+  }
+  .faktur-footer td {
+    background: #eef2f7 !important;
+    border-top: 2px solid #b8c4d4;
+    padding: .5rem .65rem;
+  }
+  .kartu .faktur-wrap input,
+  .kartu .faktur-wrap select,
+  .kartu .faktur-wrap textarea {
+    font-size: .88rem;
+    padding: .3rem .45rem;
+    border-radius: 2px;
+  }
+  .kartu .faktur-ship-box textarea,
+  .kartu .faktur-ship-box input {
+    width: 100%;
+    min-height: 5rem;
+    border: none;
+    background: transparent;
+    resize: vertical;
+  }
+  .kartu .faktur-doc-row input,
+  .kartu .faktur-doc-row select {
+    width: 100%;
+  }
+  .kartu .faktur-grid tbody input,
+  .kartu .faktur-grid tbody select {
+    width: 100%;
+    border: 1px solid #d0d7e2;
+  }
+</style>

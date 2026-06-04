@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% load akuntansi_filters %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="fw-bold">Jurnal & Transaksi</h4>
+  <a href="{% url 'akuntansi:tambah_jurnal' %}" class="btn btn-success">Input Jurnal</a>
+</div>
+<div class="card kartu p-3 mb-3">
+  <form method="get" class="row g-2 align-items-end">
+    <div class="col-md-3">
+      <label class="form-label">Filter Bulan</label>
+      <input type="month" name="bulan" value="{{ bulan_aktif }}" class="form-control">
+    </div>
+    <div class="col-md-2">
+      <button class="btn btn-outline-success w-100">Terapkan</button>
+    </div>
+    <div class="col-md-2">
+      <a href="{% url 'akuntansi:daftar_jurnal' %}" class="btn btn-outline-secondary w-100">Reset</a>
+    </div>
+  </form>
+</div>
+{% if bulan_aktif %}
+  <div class="alert alert-success py-2">Periode: {{ bulan_aktif }}</div>
+{% elif periode_label %}
+  <div class="alert alert-success py-2">Periode: {{ periode_label }}</div>
+{% endif %}
+<div class="card kartu p-3">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Tanggal</th>
+        <th>No. Bukti</th>
+        <th>Nama Akun dan Keterangan</th>
+        <th>Ref</th>
+        <th class="text-end">Debit</th>
+        <th class="text-end">Kredit</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in baris_jurnal %}
+        <tr>
+          <td>{% if item.tanggal %}{{ item.tanggal|date:"d M Y" }}{% endif %}</td>
+          <td>{{ item.nomor_bukti|default:"" }}</td>
+          <td>
+            {{ item.nama_akun }}
+            {% if item.keterangan %}
+              <div class="text-muted small">{{ item.keterangan }}</div>
+            {% endif %}
+          </td>
+          <td>{{ item.ref }}</td>
+          <td class="text-end">{{ item.debit|format_rp_kosong }}</td>
+          <td class="text-end">{{ item.kredit|format_rp_kosong }}</td>
+          <td>
+            {% if item.header_id %}
+              <div class="d-flex gap-2">
+                <a href="{% url 'akuntansi:edit_jurnal' item.header_id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                <form method="post" action="{% url 'akuntansi:hapus_jurnal' item.header_id %}" onsubmit="return confirm('Hapus jurnal ini?');">
+                  {% csrf_token %}
+                  <button class="btn btn-sm btn-outline-danger">Hapus</button>
+                </form>
+              </div>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="7">Belum ada jurnal.</td></tr>
+      {% endfor %}
+      <tr class="table-light fw-bold">
+        <td colspan="4" class="text-end">JUMLAH</td>
+        <td class="text-end">{{ total_debit|format_rp_kosong }}</td>
+        <td class="text-end">{{ total_kredit|format_rp_kosong }}</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock %}

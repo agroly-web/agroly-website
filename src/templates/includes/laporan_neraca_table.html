@@ -1,0 +1,129 @@
+{% if neraca_detail.blocks %}
+  <table class="fin-table" cellspacing="0" cellpadding="0">
+    <colgroup>
+      <col class="fin-col-label">
+      <col class="fin-col-section">
+      <col class="fin-col-group">
+      <col class="fin-col-line">
+    </colgroup>
+    <tbody>
+      {% for block in neraca_detail.blocks %}
+        <tr class="fin-gap"><td colspan="4"></td></tr>
+
+        {% if block.tipe == "aset" %}
+          <tr class="fin-section-title">
+            <td class="fin-label" colspan="4">{{ block.nama }}</td>
+          </tr>
+
+          {% if block.aset_lancar %}
+            <tr class="fin-group-title">
+              <td class="fin-label fin-pad-1" colspan="4">{{ block.aset_lancar.nama }}</td>
+            </tr>
+            {% for baris in block.aset_lancar.baris %}
+              <tr class="fin-line">
+                <td class="fin-label fin-pad-2">{{ baris.nama }}</td>
+                <td class="fin-amt"></td>
+                <td class="fin-amt"></td>
+                <td class="fin-amt fin-amt-line">{{ baris.nilai_display }}</td>
+              </tr>
+            {% endfor %}
+            <tr class="fin-group-total">
+              <td class="fin-label fin-pad-1">{{ block.aset_lancar.total_label }}</td>
+              <td class="fin-amt"></td>
+              <td class="fin-amt fin-amt-group">{{ block.aset_lancar.total_display }}</td>
+              <td class="fin-amt"></td>
+            </tr>
+          {% endif %}
+
+          {% if block.aset_tetap %}
+            <tr class="fin-group-title">
+              <td class="fin-label fin-pad-1" colspan="4">{{ block.aset_tetap.nama }}</td>
+            </tr>
+            {% for sub in block.aset_tetap.subgrup %}
+              <tr class="fin-subgroup-title">
+                <td class="fin-label fin-pad-2" colspan="4">{{ sub.nama }}</td>
+              </tr>
+              {% for baris in sub.baris %}
+                <tr class="fin-line">
+                  <td class="fin-label fin-pad-3">{{ baris.nama }}</td>
+                  <td class="fin-amt"></td>
+                  <td class="fin-amt"></td>
+                  <td class="fin-amt fin-amt-line">{{ baris.nilai_display }}</td>
+                </tr>
+              {% endfor %}
+              <tr class="fin-subgroup-total">
+                <td class="fin-label fin-pad-2">{{ sub.total_label }}</td>
+                <td class="fin-amt"></td>
+                <td class="fin-amt fin-amt-group">{{ sub.total_display }}</td>
+                <td class="fin-amt"></td>
+              </tr>
+            {% endfor %}
+            <tr class="fin-group-total">
+              <td class="fin-label fin-pad-1">{{ block.aset_tetap.total_label }}</td>
+              <td class="fin-amt"></td>
+              <td class="fin-amt fin-amt-group">{{ block.aset_tetap.total_display }}</td>
+              <td class="fin-amt"></td>
+            </tr>
+          {% endif %}
+
+          <tr class="fin-grand-total">
+            <td class="fin-label fin-total-label">{{ block.total_label }}</td>
+            <td class="fin-amt"></td>
+            <td class="fin-amt"></td>
+            <td class="fin-amt fin-amt-grand">{{ block.total_display }}</td>
+          </tr>
+
+        {% elif block.tipe == "kewajiban" %}
+          <tr class="fin-section-title">
+            <td class="fin-label" colspan="4">{{ block.nama }}</td>
+          </tr>
+          {% for baris in block.baris %}
+            <tr class="fin-line">
+              <td class="fin-label fin-pad-1">{{ baris.nama }}</td>
+              <td class="fin-amt"></td>
+              <td class="fin-amt"></td>
+              <td class="fin-amt fin-amt-line">{{ baris.nilai_display }}</td>
+            </tr>
+          {% endfor %}
+          <tr class="fin-group-total">
+            <td class="fin-label fin-pad-1">{{ block.total_label }}</td>
+            <td class="fin-amt"></td>
+            <td class="fin-amt fin-amt-group">{{ block.total_display }}</td>
+            <td class="fin-amt"></td>
+          </tr>
+
+        {% elif block.tipe == "net_assets" %}
+          <tr class="fin-gap-lg"><td colspan="4"></td></tr>
+          <tr class="fin-net-row">
+            <td class="fin-label fin-total-label">{{ block.nama }}</td>
+            <td class="fin-amt"></td>
+            <td class="fin-amt fin-amt-section">{{ block.total_display }}</td>
+            <td class="fin-amt"></td>
+          </tr>
+
+        {% elif block.tipe == "modal" %}
+          <tr class="fin-gap"><td colspan="4"></td></tr>
+          <tr class="fin-section-title">
+            <td class="fin-label" colspan="4">{{ block.nama }}</td>
+          </tr>
+          {% for baris in block.baris %}
+            <tr class="fin-line">
+              <td class="fin-label fin-pad-1">{{ baris.nama }}</td>
+              <td class="fin-amt"></td>
+              <td class="fin-amt"></td>
+              <td class="fin-amt fin-amt-line">{{ baris.nilai_display }}</td>
+            </tr>
+          {% endfor %}
+          <tr class="fin-grand-total">
+            <td class="fin-label fin-total-label">{{ block.total_label }}</td>
+            <td class="fin-amt"></td>
+            <td class="fin-amt fin-amt-section">{{ block.total_display }}</td>
+            <td class="fin-amt"></td>
+          </tr>
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p class="text-muted text-center py-5 mb-0">Belum ada data untuk laporan posisi keuangan.</p>
+{% endif %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="fw-bold mb-3">Form Produksi & Panen</h4>
+<div class="card kartu p-3">
+  <form method="post">
+    {% csrf_token %}
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+    {% endif %}
+    <div class="row g-3 mb-3">
+      <div class="col-md-4">
+        <label class="form-label">Tanggal</label>
+        {{ form.tanggal }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Komoditas</label>
+        {{ form.komoditas }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Grade</label>
+        {{ form.grade }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Jumlah Hasil Panen</label>
+        {{ form.jumlah_hasil_panen }}
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Satuan</label>
+        {{ form.satuan }}
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Keterangan</label>
+        {{ form.keterangan }}
+      </div>
+    </div>
+    <button class="btn btn-success">Simpan</button>
+    <a class="btn btn-outline-secondary" href="{% url 'produksi_panen:list' %}">Batal</a>
+  </form>
+</div>
+{% endblock %}
